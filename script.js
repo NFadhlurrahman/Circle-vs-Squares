@@ -12,7 +12,7 @@ const HEIGHT = function() {return game.area.height;}
 
 const ENEMIES = [];
 
-const SCORE = new text(10, 35, "Score: 0", "25px Arial", "white", 0, 0);
+const SCORE = new text(10, 30, "Score: 0", "25px Arial", "white", 0, 0);
 
 const PLAYER = new circle(35, HEIGHT()/2, 20, "skyblue", 0, 0, player => {
     if (player.HEALTH <= 0) {
@@ -90,7 +90,7 @@ PLAYER.blackEnemies = function() {
     }, 11250)
 }
 
-PLAYER.HEALTH_INDICATOR = new text(150, 35, "Health: 100", "25px Arial", "white", 0, 0);
+PLAYER.HEALTH_INDICATOR = new text(150, 30, "Health: 100", "25px Arial", "white", 0, 0);
 
 window.addEventListener("keydown", function(e) {
     e.preventDefault();
