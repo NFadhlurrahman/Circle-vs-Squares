@@ -6,17 +6,17 @@ export function circle(x, y, radius, color, speedX, speedY, action = (obj) => {}
     this.speedX = speedX;
     this.speedY = speedY;
     this.action = action;
-    game.ctx.fillStyle = this.color;
-    game.ctx.arc(this.x, this.y, this.radius, 0, 2*Math.PI);
+    game.ctx.fillStyle = (typeof this.color === "function") ? this.color() : this.color;
+    game.ctx.arc((typeof this.x === "function") ? this.x() : this.x , (typeof this.y === "function") ? this.y() : this.y, (typeof this.radius === "function") ? radius() : radius, 0, 2*Math.PI);
     game.ctx.fill();
     this.update = () => {
-        game.ctx.fillStyle = this.color;
+        game.ctx.fillStyle = (typeof this.color === "function") ? this.color() : this.color;
         game.ctx.beginPath();
         this.action(this);
-        game.ctx.arc(this.x, this.y, this.radius, 0, 2*Math.PI);
+        game.ctx.arc((typeof this.x === "function") ? this.x() : this.x , (typeof this.y === "function") ? this.y() : this.y, (typeof this.radius === "function") ? radius() : radius, 0, 2*Math.PI);
         game.ctx.fill();
-        this.x += this.speedX;
-        this.y += this.speedY;
+        if (typeof this.x !== "function") this.x += this.speedX;
+        if (typeof this.y !== "function") this.y += this.speedY;
     };
 }
 
@@ -29,14 +29,14 @@ export function rectangle(x, y, width, height, color, speedX, speedY, action = (
     this.speedX = speedX;
     this.speedY = speedY;
     this.action = action;
-    game.ctx.fillStyle = this.color;
-    game.ctx.fillRect(this.x, this.y, this.width, this.height);
+    game.ctx.fillStyle = (typeof this.color === "function") ? this.color() : this.color;
+    game.ctx.fillRect((typeof this.x === "function") ? this.x() : this.x, (typeof this.y === "function") ? this.y() : this.y, (typeof this.width === "function") ? this.width() : this.width, (typeof this.height === "function") ? this.height() : this.height);
     this.update = () => {
-        game.ctx.fillStyle = this.color;
+        game.ctx.fillStyle = (typeof this.color === "function") ? this.color() : this.color;
         this.action(this);
-        game.ctx.fillRect(this.x, this.y, this.width, this.height);
-        this.x += this.speedX;
-        this.y += this.speedY;
+        game.ctx.fillRect((typeof this.x === "function") ? this.x() : this.x, (typeof this.y === "function") ? this.y() : this.y, (typeof this.width === "function") ? this.width() : this.width, (typeof this.height === "function") ? this.height() : this.height);
+        if (typeof this.x !== "function") this.x += this.speedX;
+        if (typeof this.y !== "function") this.y += this.speedY;
     }
 }
 
@@ -49,21 +49,21 @@ export function centeredText(x, y, text, font, color, speedX, speedY, action = (
     this.speedX = speedX;
     this.speedY = speedY;
     this.action = action;
-    game.ctx.font = this.font;
-    game.ctx.fillStyle = this.color;
+    game.ctx.font = (typeof this.font === "function") ? this.font() : this.font;
+    game.ctx.fillStyle = (typeof this.color === "function") ? this.color() : this.color;
     game.ctx.textAlign = "center";
-    game.ctx.fillText(this.text, this.x, this.y);
+    game.ctx.fillText((typeof this.text === "function") ? this.text() : this.text, (typeof this.x === "function") ? this.x() : this.x, (typeof this.y === "function") ? this.y() : this.y);
     game.ctx.textAlign = "left";
     this.update = () => {
-        game.ctx.font = this.font;
-        game.ctx.fillStyle = this.color;
+        game.ctx.font = (typeof this.font === "function") ? this.font() : this.font;
+        game.ctx.fillStyle = (typeof this.color === "function") ? this.color() : this.color;
         game.ctx.textAlign = "center";
         this.action(this);
-        game.ctx.fillText(this.text, this.x, this.y);
+        game.ctx.fillText((typeof this.text === "function") ? this.text() : this.text, (typeof this.x === "function") ? this.x() : this.x, (typeof this.y === "function") ? this.y() : this.y);
         game.ctx.textAlign = "left";
         game.ctx.textBaseline = "middle";
-        this.x += this.speedX;
-        this.y += this.speedY;
+        if (typeof this.x !== "function") this.x += this.speedX;
+        if (typeof this.y !== "function") this.y += this.speedY;
     }
 }
 
@@ -76,16 +76,16 @@ export function text(x, y, text, font, color, speedX, speedY, action = (obj) => 
     this.speedX = speedX;
     this.speedY = speedY;
     this.action = action;
-    game.ctx.font = this.font;
-    game.ctx.fillStyle = this.color;
-    game.ctx.fillText(this.text, this.x, this.y);
+    game.ctx.font = (typeof this.font === "function") ? this.font() : this.font;
+    game.ctx.fillStyle = (typeof this.color === "function") ? this.color() : this.color;
+    game.ctx.fillText((typeof this.text === "function") ? this.text() : this.text, (typeof this.x === "function") ? this.x() : this.x, (typeof this.y === "function") ? this.y() : this.y);
     this.update = () => {
-        game.ctx.font = this.font;
-        game.ctx.fillStyle = this.color;
+        game.ctx.font = (typeof this.font === "function") ? this.font() : this.font;
+        game.ctx.fillStyle = (typeof this.color === "function") ? this.color() : this.color;
         this.action(this);
-        game.ctx.fillText(this.text, this.x, this.y);
-        this.x += this.speedX;
-        this.y += this.speedY;
+        game.ctx.fillText((typeof this.text === "function") ? this.text() : this.text, (typeof this.x === "function") ? this.x() : this.x, (typeof this.y === "function") ? this.y() : this.y);
+        if (typeof this.x !== "function") this.x += this.speedX;
+        if (typeof this.y !== "function") this.y += this.speedY;
     }
 }
 

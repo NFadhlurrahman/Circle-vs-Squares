@@ -183,8 +183,8 @@ window.onload = function() {
     }, 4260);
 };
 
-const WALL1 = new rectangle(0, 0, WIDTH(), 35, "brown", 0, 0)
-const WALL2 = new rectangle(0, HEIGHT()-30, WIDTH(), 35, "black", 0, 0);
+const WALL1 = new rectangle(0, 0, WIDTH, 35, "brown", 0, 0)
+const WALL2 = new rectangle(0, () => HEIGHT()-30, WIDTH, 35, "black", 0, 0);
 
 game.addcomponent("player", PLAYER);
 game.addcomponent("wall1", WALL1);
