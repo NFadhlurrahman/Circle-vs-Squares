@@ -9,9 +9,12 @@
 </head>
 <body>
     <noscript>JavaScript is needed to play this game.</noscript>
-    <canvas id="game" width="640" height="480" style="background-color: #eeeeee">
-        Sorry, your browser doesn't support HTML5 canvas.
-    </canvas>
+    <script>
+        var loading = document.createElement("p");
+        loading.id = "loading";
+        loading.textContent = "Loading...";
+        document.body.replaceChild(loading, document.currentScript);
+    </script>
     <br>
     <script type="module" src="/script.js"></script>
 </body>

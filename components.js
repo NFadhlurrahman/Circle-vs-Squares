@@ -91,7 +91,7 @@ export function text(x, y, text, font, color, speedX, speedY, action = (obj) => 
 
 export const game = ({
     init() {
-        const gameArea = document.querySelector("#game");
+        const gameArea = document.createElement("canvas");
         gameArea.oncontextmenu = function(e) {e.preventDefault();}
         gameArea.width = window.innerWidth;
         gameArea.height = window.innerHeight;
