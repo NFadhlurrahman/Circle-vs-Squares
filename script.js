@@ -192,8 +192,5 @@ game.addcomponent("wall2", WALL2);
 game.addcomponent("score", SCORE);
 game.addcomponent("health indicator", PLAYER.HEALTH_INDICATOR);
 
-document.body.replaceChild(
-    game.area,
-    document.getElementById("loading")
-);
+document.body.appendChild(game.area);
 game.play();
