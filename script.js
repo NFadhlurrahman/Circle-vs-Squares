@@ -29,15 +29,24 @@ const PLAYER = new circle(35, HEIGHT()/2, 20, "skyblue", 0, 0, player => {
         clearInterval(PLAYER.blueEnemies);
         if (typeof PLAYER.greenEnemies === "number") clearInterval(PLAYER.greenEnemies);
         if (typeof PLAYER.blackEnemies === "number") clearInterval(PLAYER.blackEnemies);
+        if (typeof PLAYER.randomEnemies === "number") clearInterval(PLAYER.randomEnemies);
     }
     if (player.score >= 12) {
         if (typeof PLAYER.greenEnemies === "function") {
             PLAYER.greenEnemies = PLAYER.greenEnemies();
         }
     }
-    if (player.score >= 50) {
+    if (player.score >= 40) {
         if (typeof PLAYER.blackEnemies === "function") {
             PLAYER.blackEnemies = PLAYER.blackEnemies();
+        }
+    }
+    if (player.score >= 48) {
+        clearInterval(PLAYER.blueEnemies);
+    }
+    if (player.score >= 60) {
+        if (typeof PLAYER.randomEnemies === "function") {
+            PLAYER.randomEnemies = PLAYER.randomEnemies();
         }
     }
 });
@@ -88,6 +97,28 @@ PLAYER.blackEnemies = function() {
         ENEMIES.push(ENEMY);
         game.addcomponent(`enemy${PLAYER.numberOfEnemies()}`, ENEMY)
     }, 11250)
+}
+
+PLAYER.randomEnemies = function() {
+    return setInterval(() => {
+        const ENEMY = new rectangle(WIDTH() - 60, Math.floor(Math.random() * (HEIGHT() - 110)) + 35, 50, 50, ["yellow", "orange", "purple", "gray"][Math.floor(Math.random() * 4)], Math.random() * (-2) - 2, 0, enemy => {
+            if (enemy.HEALTH <= 0) {
+                game.deletecomponent(enemy.name);
+                ENEMIES[ENEMIES.indexOf(enemy)] = undefined;
+                PLAYER.score += 2;
+                SCORE.text = `Score: ${PLAYER.score}`;
+            }
+            if (enemy.x <= -50) {
+                game.deletecomponent(enemy.name);
+                ENEMIES[ENEMIES.indexOf(enemy)] = undefined;
+                (PLAYER.HEALTH >= 7) ? PLAYER.HEALTH -= 7 : PLAYER.HEALTH = 0;
+                PLAYER.HEALTH_INDICATOR.text = `Health: ${PLAYER.HEALTH}`;
+            }
+        });
+        ENEMY.HEALTH = 25;
+        ENEMIES.push(ENEMY);
+        game.addcomponent(`enemy${PLAYER.numberOfEnemies()}`, ENEMY);
+    }, 7500);
 }
 
 PLAYER.HEALTH_INDICATOR = new text(150, 30, "Health: 100", "25px Arial", "white", 0, 0);
@@ -182,6 +213,13 @@ window.onload = function() {
         game.addcomponent(`enemy${PLAYER.numberOfEnemies()}`, ENEMY);
     }, 4260);
 };
+
+PLAYER.heal = setInterval(function() {
+    if (PLAYER.HEALTH > 0) {
+        PLAYER.HEALTH += 3;
+        PLAYER.HEALTH_INDICATOR.text = `Health: ${PLAYER.HEALTH}`;
+    }
+}, 24000);
 
 const WALL1 = new rectangle(0, 0, WIDTH, 35, "brown", 0, 0)
 const WALL2 = new rectangle(0, () => HEIGHT()-30, WIDTH, 35, "black", 0, 0);
