@@ -1,4 +1,4 @@
-const cacheName = "circle-vs-squares-v8";
+const cacheName = "circle-vs-squares-v9";
 const appShellFiles = [
     "/",
     "/index.html",
