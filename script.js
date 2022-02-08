@@ -30,6 +30,7 @@ const PLAYER = new circle(35, HEIGHT()/2, 20, "skyblue", 0, 0, player => {
         if (typeof PLAYER.greenEnemies === "number") clearInterval(PLAYER.greenEnemies);
         if (typeof PLAYER.blackEnemies === "number") clearInterval(PLAYER.blackEnemies);
         if (typeof PLAYER.randomEnemies === "number") clearInterval(PLAYER.randomEnemies);
+        if (typeof PLAYER.yMoveEnemies === "number") clearInterval(PLAYER.yMoveEnemies);
     }
     if (player.score >= 12) {
         if (typeof PLAYER.greenEnemies === "function") {
@@ -47,6 +48,11 @@ const PLAYER = new circle(35, HEIGHT()/2, 20, "skyblue", 0, 0, player => {
     if (player.score >= 60) {
         if (typeof PLAYER.randomEnemies === "function") {
             PLAYER.randomEnemies = PLAYER.randomEnemies();
+        }
+    }
+    if (player.score >= 100) {
+        if (typeof PLAYER.yMoveEnemies === "function") {
+            PLAYER.yMoveEnemies = PLAYER.yMoveEnemies();
         }
     }
 });
@@ -119,6 +125,30 @@ PLAYER.randomEnemies = function() {
         ENEMIES.push(ENEMY);
         game.addcomponent(`enemy${PLAYER.numberOfEnemies()}`, ENEMY);
     }, 7500);
+}
+
+PLAYER.yMoveEnemies = function() {
+    return setInterval(() => {
+        const ENEMY = new rectangle(WIDTH() - 60, Math.floor(Math.random() * (HEIGHT() - 110)) + 35, 50, 50, ["brown", "hotpink", "white", "darkolivegreen"][Math.floor(Math.random() * 4)], Math.random() * (-2), 0, enemy => {
+            if (enemy.HEALTH <= 0) {
+                game.deletecomponent(enemy.name);
+                ENEMIES[ENEMIES.indexOf(enemy)] = undefined;
+                PLAYER.score += 2;
+                PLAYER.HEALTH += 2;
+                SCORE.text = `Score: ${PLAYER.score}`;
+            }
+            if (enemy.x <= -50) {
+                game.deletecomponent(enemy.name);
+                ENEMIES[ENEMIES.indexOf(enemy)] = undefined;
+                (PLAYER.HEALTH >= 7) ? PLAYER.HEALTH -= 7 : PLAYER.HEALTH = 0;
+                PLAYER.HEALTH_INDICATOR.text = `Health: ${PLAYER.HEALTH}`;
+            }
+            enemy.speedY = Math.floor(Math.random() * 6) - 3;
+        });
+        ENEMY.HEALTH = 20;
+        ENEMIES.push(ENEMY);
+        game.addcomponent(`enemy${PLAYER.numberOfEnemies()}`, ENEMY);
+    }, 13500);
 }
 
 PLAYER.HEALTH_INDICATOR = new text(150, 30, "Health: 100", "25px Arial", "white", 0, 0);
